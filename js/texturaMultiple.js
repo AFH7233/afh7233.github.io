@@ -103,7 +103,10 @@ function drawScene(gl, programInfo, object) {
     mat4.lookAt(cameraMatrix, [6.0,0.0,5.0],[6.0,0.0,0.0],[0.0,1.0,0.0]);
     var localMatrix = mat4.create();
     object.rotation =  object.rotation  > (2.0*Math.PI)? 0.0: object.rotation + 0.005*(24.0*2.0*Math.PI)/180.0;
-    mat4.translate(localMatrix, localMatrix, [6.0,0.0,0.0]);    
+    mat4.translate(localMatrix, localMatrix, [6.0,0.0,0.0]); 
+    localMatrix[0] = -1;
+
+    mat4.rotate(localMatrix, localMatrix, 90.0*2.0*(Math.PI)/180.0, [1.0,0.0,0.0]); 
     mat4.rotate(localMatrix, localMatrix, object.rotation, [0.0,1.0,0.0]);
 
     renderObject(gl, programInfo, object, projectionMatrix, localMatrix, cameraMatrix);
@@ -173,7 +176,7 @@ function renderObject(gl, programInfo, object3D, projectionMatrix, matrix, camer
         false,
         cameraMatrix);
 
-    var lightPos  = [0.0,0.0,5.0,1.0];
+    var lightPos  = [0.0,0.0,4.0,1.0];
     vec4.transformMat4(lightPos, lightPos, cameraMatrix);
 
 

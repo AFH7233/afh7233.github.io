@@ -18,12 +18,13 @@ void main(void) {
     // Lambert's cosine law
     float mezcla = dot(N, L);
     float lambertian = max(dot(N, L), 0.0);
-    vec3 finalColor = ambientColor  + (lambertian * diffuseColor);
+    vec3 finalColor = 0.9*ambientColor  + (0.7*lambertian * diffuseColor);
     vec4 day = texture2D(uSampler01, vTextureCoord);
     vec4 clouds = texture2D(uSampler02, vTextureCoord);
     vec4 night = texture2D(uSampler03, vTextureCoord);
     vec4 texelColor = vec4(0.0,0.0,0.0,0.0);
     if(mezcla < 0.0){
+        night = night.r > 0.5 && night.g > 0.5 ? 5.0*night : night; //resaltar las luces de las ciudades
         texelColor =   (night + clouds)/2.0;
     } else {
         texelColor = (day + clouds)/2.0;
