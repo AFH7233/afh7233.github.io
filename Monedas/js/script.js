@@ -30,6 +30,7 @@ class QuadTree{
         this.children = [];
         this.coins = [];
         this.isLeaf = true;
+        this.isRoot = false;
     }
 
     addCoin(coin){
@@ -150,11 +151,20 @@ function addCoin(event, ctx, coinList){
 function addCoinTree(event, ctx, tree){
     let x = event.offsetX;
     let y = event.offsetY;
+
     let coin = new Coin(x,y);
-    if(!tree.collide(coin)){
+    if(isInsideSquare(tree.size, coin) && !tree.collide(coin)){
         tree.addCoin(coin);
         coin.draw(ctx);
         tree.draw(ctx);
     }
 
+}
+
+function isInsideSquare(size, coin){
+    let left = 0 + 10;
+    let right = size - 10;
+    let up = 0 + 10;
+    let down = size - 10;   
+    return (left < coin.x && coin.x < right && up < coin.y && coin.y < down);
 }
